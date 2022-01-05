@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs
+/Tools/Tools/Debug/Tools.tlog
+/Tools/Tools/Debug
+/Tools/Debug
+/Tools/.vs/Tools/v16

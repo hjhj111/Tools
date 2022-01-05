@@ -17,7 +17,7 @@ int main()
     cout<<endl;
     CoutNumber<float,3>(7890.348888);
     //cout<<1<<endl;
-    getchar();
+    //getchar();
 
     Timer t;
     t.start(5000,[]()
