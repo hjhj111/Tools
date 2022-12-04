@@ -1,4 +1,5 @@
 //from yazi-rpc. for server to get func's args from data recieved from rpc client
+//https://hkrb7870j3.feishu.cn/docx/M60ddvQh7oocLmxnPeQcTlpnnUD
 
 template<typename R, typename F, typename Tuple>
 typename std::enable_if<!std::is_same<R, void>::value, R>::type
