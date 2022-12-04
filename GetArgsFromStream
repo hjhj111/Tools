@@ -1,0 +1,35 @@
+//from yazi-rpc. for server to get func's args from data recieved from rpc client
+
+template<typename R, typename F, typename Tuple>
+typename std::enable_if<!std::is_same<R, void>::value, R>::type
+FunctionHandler::call_impl(F func, Tuple args)
+{
+    return invoke<R>(func, args);
+}
+
+template<typename R, typename F, typename Tuple>
+auto FunctionHandler::invoke(F && func, Tuple && t)
+{
+    constexpr auto size = std::tuple_size<typename std::decay<Tuple>::type>::value;
+    return invoke_impl<R>(std::forward<F>(func), std::forward<Tuple>(t), std::make_index_sequence<size>{});
+}
+
+template<typename R, typename F, typename Tuple, std::size_t... Index>
+auto FunctionHandler::invoke_impl(F && func, Tuple && t, std::index_sequence<Index...>)
+{
+    return func(std::get<Index>(std::forward<Tuple>(t))...);
+}
+
+template<typename Tuple, std::size_t... I>
+Tuple FunctionHandler::get_args(DataStream & ds, std::index_sequence<I...>)
+{
+    Tuple t;
+    initializer_list<int>{((get_arg<Tuple, I>(ds, t)), 0)...};
+    return t;
+}
+
+template<typename Tuple, std::size_t Id>
+void FunctionHandler::get_arg(DataStream & ds, Tuple & t)
+{
+    ds >> std::get<Id>(t);
+}
